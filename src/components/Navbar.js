@@ -10,7 +10,7 @@ const Navbar = () => {
         <li><NavLink className="navbar__link" to="/about">About</NavLink></li>
       </div>
       <div className="navbar__middle">
-        <li><NavLink className="navbar__link navbar__link--home" exact to="/">STORE NAME</NavLink></li>
+        <li><NavLink className="navbar__link navbar__link--home" exact to="/">Mallika's Store</NavLink></li>
       </div>
       <div className="navbar__right">
         <li><NavLink className="navbar__link" to="/cart">Cart</NavLink></li>
