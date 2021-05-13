@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { 
   BrowserRouter as Router, 
   Switch, 
@@ -24,6 +24,39 @@ const App = () => {
     { path:'/about', name:'About', Component: About, },
     { path:'/cart', name:'Cart', Component: Cart, },
   ]
+  
+  const [ cartList, setCartList ] = useState([]);
+  const [ cartQuantity, setCartQuantity ] = useState(0)
+
+  const handleAddToCart = (itemToAdd) => {
+
+
+    if (cartList.find( item => item.sku === itemToAdd.sku)) {
+      setCartList( prevState => prevState.map( item => 
+        item.sku === itemToAdd.sku
+        ?{...item, quantity: item.quantity + 1}
+        :{...item}))
+    } else {
+      setCartList( prevState => [...prevState, {...itemToAdd, quantity:1}])
+    }
+
+
+    // if (cartList.find( item => item.sku === itemToAdd.sku)) {
+    //   const newCartList = cartList.map( item => 
+    //     item.sku === itemToAdd.sku
+    //     ?{...item, quantity: item.quantity + 1}
+    //     :{...item})
+    //   setCartList( newCartList )
+    // } else {
+    //   setCartList( prevState => [...prevState, {...itemToAdd, quantity:1}])
+    // }
+
+
+  }
+  
+  useEffect( () => {
+    setCartQuantity( (cartList.reduce( (total, item) => total + item.quantity , 0)) )
+  }, [cartList])
 
   return (
     <Router>
@@ -34,7 +67,9 @@ const App = () => {
           timeout={0}
           classNames="container__navbar-"
         >
-          <Navbar />
+          <Navbar 
+            cartQuantity={cartQuantity}
+          />
         </CSSTransition>
         <div className="container__content">
           {routes.map(({path, Component}) => (
@@ -48,7 +83,10 @@ const App = () => {
                   unmountOnExit={true}
                 >
                   <div className="container__page">
-                    <Component />
+                    <Component 
+                      handleAddToCart={handleAddToCart}
+                      cartList={cartList}
+                    />
                   </div>
                 </CSSTransition>
               )}

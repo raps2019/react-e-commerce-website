@@ -1,11 +1,16 @@
 import React, {Fragment} from 'react'
 import ItemList from './ItemList'
 
-const Amplifiers = () => {
+const Amplifiers = (props) => {
+
+  const { handleAddToCart } = props
   return (
     <Fragment>
-      <h1 className="text--category-heading">Amplifiers</h1>
-      <ItemList category='amplifiers' />
+      <h1 className="text--page-heading">Amplifiers</h1>
+      <ItemList 
+        category='amplifiers'
+        handleAddToCart={handleAddToCart} 
+      />
     </Fragment>
   )
 }

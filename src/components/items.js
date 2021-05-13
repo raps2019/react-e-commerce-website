@@ -6,6 +6,7 @@ import c275bee_1 from '../images/c275bee/c275bee_1.jpg'
 
 const items = [
   {
+    sku: 1001,
     category: "speakers",
     manufacturer: "PSB",
     model: "X2T",
@@ -14,6 +15,7 @@ const items = [
     image1: x2t_1,
   },
   {
+    sku: 1002,
     category: "speakers",
     manufacturer: "PSB",
     model: "Imagine T3",
@@ -22,6 +24,7 @@ const items = [
     image1: imagineT3_1,
   },  
   {
+    sku: 1003,
     category: "amplifiers",
     manufacturer: "Anthem",
     model: "MRX520",
@@ -30,6 +33,7 @@ const items = [
     image1: mrx520_1,
   },
   {
+    sku: 1004,
     category: "amplifiers",
     manufacturer: "NAD",
     model: "C275BEE",

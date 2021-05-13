@@ -1,7 +1,10 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import { CSSTransition, SwitchTransition } from 'react-transition-group'
 
-const Navbar = () => {
+
+const Navbar = (props) => {
+  const {cartQuantity} = props
   return (
     <nav className="container__navbar">
       <div className="navbar__left">
@@ -13,7 +16,15 @@ const Navbar = () => {
         <li><NavLink className="navbar__link navbar__link--home" exact to="/">audiófilo puro</NavLink></li>
       </div>
       <div className="navbar__right">
-        <li><NavLink className="navbar__link" to="/cart">Cart</NavLink></li>
+        <SwitchTransition>
+          <CSSTransition
+          key={cartQuantity}
+          timeout={ { exit:500, enter:500} }
+          classNames={'navbar__link--cart-'}
+          >
+            <li><NavLink className="navbar__link navbar__link--cart" to="/cart">Cart ({cartQuantity})</NavLink></li>
+          </CSSTransition>
+        </SwitchTransition>
       </div>
     </nav>
   )

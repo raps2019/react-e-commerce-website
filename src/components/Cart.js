@@ -3,7 +3,7 @@ import React, {Fragment} from 'react'
 const Cart = () => {
   return (
     <Fragment>
-      <h1>Cart</h1>
+      <h1 className="text--page-heading">Cart</h1>
     </Fragment>
   )
 }
