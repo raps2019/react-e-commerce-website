@@ -4,7 +4,7 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group'
 
 
 const Navbar = (props) => {
-  const {cartQuantity} = props
+  const {cartQuantity, totalCartValue} = props
   return (
     <nav className="container__navbar">
       <div className="navbar__left">
@@ -22,7 +22,12 @@ const Navbar = (props) => {
           timeout={ { exit:500, enter:500} }
           classNames={'navbar__link--cart-'}
           >
-            <li><NavLink className="navbar__link navbar__link--cart" to="/cart">Cart ({cartQuantity})</NavLink></li>
+            <li><NavLink className="navbar__link navbar__link--cart" to="/cart">Cart 
+              {cartQuantity? ` - ${(totalCartValue).toLocaleString(`en-US`,{
+              style:'currency',
+              currency:'CAD'
+              })} (${cartQuantity})` 
+              : null}</NavLink></li>
           </CSSTransition>
         </SwitchTransition>
       </div>

@@ -26,11 +26,10 @@ const App = () => {
   ]
   
   const [ cartList, setCartList ] = useState([]);
-  const [ cartQuantity, setCartQuantity ] = useState(0)
+  const [ cartQuantity, setCartQuantity ] = useState(0);
+  const [ totalCartValue, setTotalCartValue ] = useState(0);
 
   const handleAddToCart = (itemToAdd) => {
-
-
     if (cartList.find( item => item.sku === itemToAdd.sku)) {
       setCartList( prevState => prevState.map( item => 
         item.sku === itemToAdd.sku
@@ -39,23 +38,38 @@ const App = () => {
     } else {
       setCartList( prevState => [...prevState, {...itemToAdd, quantity:1}])
     }
-
-
-    // if (cartList.find( item => item.sku === itemToAdd.sku)) {
-    //   const newCartList = cartList.map( item => 
-    //     item.sku === itemToAdd.sku
-    //     ?{...item, quantity: item.quantity + 1}
-    //     :{...item})
-    //   setCartList( newCartList )
-    // } else {
-    //   setCartList( prevState => [...prevState, {...itemToAdd, quantity:1}])
-    // }
-
-
   }
+
+  const handleIncrementQuantity = (itemSku) => {
+    setCartList( prevState => prevState.map( item => 
+      item.sku === itemSku
+      ?{...item, quantity: item.quantity + 1}
+      :{...item}))
+  }
+
+  const handleDecrementQuantity = (itemSku, itemQuantity) => {
+    if (itemQuantity > 1) {
+    setCartList( prevState => prevState.map( item => 
+      item.sku === itemSku
+      ?{...item, quantity: item.quantity - 1}
+      :{...item}))
+    } else {
+      handleDeleteItem(itemSku)
+      // const newCartList = cartList.filter( item => item.sku !== itemSku )
+      // setCartList (newCartList)
+    }
+  }
+
+  const handleDeleteItem = (itemSku) => {
+    const newCartList = cartList.filter( item => item.sku !== itemSku )
+    setCartList (newCartList)
+  }
+
+
   
   useEffect( () => {
-    setCartQuantity( (cartList.reduce( (total, item) => total + item.quantity , 0)) )
+    setCartQuantity( cartList.reduce((total, item) => total + item.quantity , 0) ); 
+    setTotalCartValue( cartList.reduce( (total, item) => total + (item.price * item.quantity), 0) );
   }, [cartList])
 
   return (
@@ -69,6 +83,7 @@ const App = () => {
         >
           <Navbar 
             cartQuantity={cartQuantity}
+            totalCartValue={totalCartValue}
           />
         </CSSTransition>
         <div className="container__content">
@@ -85,7 +100,11 @@ const App = () => {
                   <div className="container__page">
                     <Component 
                       handleAddToCart={handleAddToCart}
+                      handleIncrementQuantity={handleIncrementQuantity}
+                      handleDecrementQuantity={handleDecrementQuantity}
+                      handleDeleteItem={handleDeleteItem}
                       cartList={cartList}
+                      totalCartValue={totalCartValue}
                     />
                   </div>
                 </CSSTransition>
