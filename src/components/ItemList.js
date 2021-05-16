@@ -1,5 +1,7 @@
 import React from 'react'
 import items from './items';
+import { Link, NavLink, Route, Switch } from 'react-router-dom'
+
 
 const ItemList = (props) => {
 
@@ -19,7 +21,7 @@ const ItemList = (props) => {
               <p className="text--item-heading">{item.manufacturer} {item.model}</p>
               <div className="container__buttons">
                 <button className="button" onClick={() => handleAddToCart(item)}>Add to Cart</button>
-                <button className="button">Learn More</button>
+                <Link key={item.sku} to={`/productPage/${item.sku}`}>Learn More</Link>
               </div>
             </div>
             <p>{item.description}</p>
@@ -28,6 +30,9 @@ const ItemList = (props) => {
               currency:'CAD'
             })}</p>
           </div>
+          {/* <Switch>
+            <Route path={`/${item.category}/${item.model}`} component={Product} item={item}/> 
+          </Switch> */}
         </div>
       ))}
     </div>

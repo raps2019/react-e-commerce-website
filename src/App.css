@@ -332,3 +332,12 @@
   font-size: 7em;
   z-index: 1;
 }
+
+.container__product-page {
+  display: grid;
+  max-width: 1000px;
+  margin: 50px 0;
+  align-items: center;
+  justify-items: center;
+  margin: auto;
+}

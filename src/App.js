@@ -13,6 +13,7 @@ import About from './components/About';
 import Cart from './components/Cart';
 import Amplifiers from './components/Amplifiers';
 import Speakers from './components/Speakers';
+import ProductPage from './components/ProductPage';
 
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
     { path:'/amplifiers', name:'Amplifiers', Component: Amplifiers, },
     { path:'/about', name:'About', Component: About, },
     { path:'/cart', name:'Cart', Component: Cart, },
+    { path:'/productPage/:sku', name:'ProductPage', Component: ProductPage, }
   ]
   
   const [ cartList, setCartList ] = useState([]);
@@ -87,30 +89,33 @@ const App = () => {
           />
         </CSSTransition>
         <div className="container__content">
-          {routes.map(({path, Component}) => (
-            <Route key={path} exact path={path}>
-              {({ match }) => (
-                <CSSTransition
-                  in={match != null}
-                  appear={true}
-                  timeout={{ appear:0, enter:750, exit:300 }}
-                  classNames="container__page-"
-                  unmountOnExit={true}
-                >
-                  <div className="container__page">
-                    <Component 
-                      handleAddToCart={handleAddToCart}
-                      handleIncrementQuantity={handleIncrementQuantity}
-                      handleDecrementQuantity={handleDecrementQuantity}
-                      handleDeleteItem={handleDeleteItem}
-                      cartList={cartList}
-                      totalCartValue={totalCartValue}
-                    />
-                  </div>
-                </CSSTransition>
-              )}
-            </Route>
-          ))}
+
+          <Switch>
+            {routes.map(({path, Component}) => (
+              <Route key={path} exact path={path}>
+                {({ match }) => (
+                  <CSSTransition
+                    in={match != null}
+                    appear={true}
+                    timeout={{ appear:0, enter:750, exit:300 }}
+                    classNames="container__page-"
+                    unmountOnExit={true}
+                  >
+                    <div className="container__page">
+                      <Component 
+                        handleAddToCart={handleAddToCart}
+                        handleIncrementQuantity={handleIncrementQuantity}
+                        handleDecrementQuantity={handleDecrementQuantity}
+                        handleDeleteItem={handleDeleteItem}
+                        cartList={cartList}
+                        totalCartValue={totalCartValue}
+                      />
+                    </div>
+                  </CSSTransition>
+                )}
+              </Route>
+            ))}
+          </Switch>
         </div>
       </div>
     </Router> 
