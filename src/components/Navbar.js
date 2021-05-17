@@ -1,10 +1,31 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, Route, useHistory } from 'react-router-dom'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
 
 
 const Navbar = (props) => {
-  const {cartQuantity, totalCartValue} = props
+
+
+
+  const 
+  {
+    cartQuantity, 
+    totalCartValue, 
+    handleSearchInputChange, 
+    handleSearchSubmit,
+    searchText
+  } = props
+
+  let history = useHistory()
+
+  const handleSearchKeyUp = (e) => {
+    e.preventDefault();
+    if (e.key === 'Enter' || e.keyCode === 13) {
+      handleSearchSubmit();
+      history.push('/searchResults')
+    }
+  }
+
   return (
     <nav className="container__navbar">
       <div className="navbar__left">
@@ -16,6 +37,15 @@ const Navbar = (props) => {
         <li><NavLink className="navbar__link navbar__link--home" exact to="/">audiófilo puro</NavLink></li>
       </div>
       <div className="navbar__right">
+        <input 
+          type ='text'
+          onChange={handleSearchInputChange}
+          onKeyUp={handleSearchKeyUp}
+          value={searchText}>
+        </input>
+        <li>
+          <NavLink className="navbar__link" to="/searchResults" onClick={handleSearchSubmit}>Search</NavLink>
+        </li>
         <SwitchTransition>
           <CSSTransition
           key={cartQuantity}
